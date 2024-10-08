@@ -74,3 +74,24 @@ export const getGame = async(req, res)=>{
         });
     }
 }
+
+export const deleteGame = async(req, res)=>{
+    
+    try{
+        const gameId = req.params.id
+        console.log(gameId)
+        let conexion = await connection();
+        let respuesta = await conexion.query(`DELETE FROM games WHERE id = ${gameId}`)
+        console.log(respuesta)
+        return res.status(200).json({
+            status: "success",
+            data: respuesta
+        });
+    }catch(error){
+        console.log('Error en registro de juego:', error);
+        return res.status(500).json({
+            status: "Error",
+            message: "Juego no encontrado"
+        });
+    }
+}
